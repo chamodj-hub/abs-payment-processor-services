@@ -23,9 +23,9 @@ spec:
         app: abs-payment-processor-services
     spec:
       volumes:
-        - name: pv-volume
+        - name: pv-volume-abs
           persistentVolumeClaim:
-            claimName: pv-claim
+            claimName: pv-claim-abs
       containers:
         - name: abs-payment-processor-services
           image: 058264110280.dkr.ecr.ap-southeast-1.amazonaws.com/neos-2-0-sit-abs-payment-processor-services:V1.00.00.01
@@ -39,7 +39,7 @@ spec:
           terminationMessagePath: /dev/termination-log
           terminationMessagePolicy: File
           volumeMounts:
-            - name: pv-volume
+            - name: pv-volume-abs
               mountPath: /opt/
           env:
             - name: TZ
