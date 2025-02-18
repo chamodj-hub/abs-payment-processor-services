@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
   annotations:
     deployment.kubernetes.io/revision: "1"
-  name: abs-payment-processor-services
+  name: abs-payment-processor
   namespace: ndbabs
 spec:
   progressDeadlineSeconds: 600
@@ -11,7 +11,7 @@ spec:
   revisionHistoryLimit: 10
   selector:
     matchLabels:
-      app:abs-payment-processor-services
+      app: abs-payment-processor
   strategy:
     rollingUpdate:
       maxSurge: 1
@@ -20,15 +20,17 @@ spec:
   template:
     metadata:
       labels:
-        app: abs-payment-processor-services
+        app: abs-payment-processor
     spec:
       volumes:
         - name: pv-volume-abs
+        - name: efs-pv
           persistentVolumeClaim:
             claimName: pv-claim-abs
+            claimName: efs-pvc
       containers:
         - name: abs-payment-processor-services
-          image: 058264110280.dkr.ecr.ap-southeast-1.amazonaws.com/neos-2-0-sit-abs-payment-processor-services:V1.00.00.08.01
+          image: 058264110280.dkr.ecr.ap-southeast-1.amazonaws.com/neos-2-0-sit-abs-payment-processor-services:V1.00.00.08
           imagePullPolicy: Always
           ports:
             - containerPort: 9399
@@ -41,6 +43,8 @@ spec:
           volumeMounts:
             - name: pv-volume-abs
               mountPath: /opt/
+            - name: efs-pv
+              mountPath: /opt/payment
           env:
             - name: TZ
               value: "Asia/Colombo"
@@ -51,4 +55,3 @@ spec:
       restartPolicy: Always
       securityContext: {}
       terminationGracePeriodSeconds: 120
-
