@@ -30,7 +30,7 @@ spec:
             claimName: efs-pvc
       containers:
         - name: abs-payment-processor-services
-          image: 058264110280.dkr.ecr.ap-southeast-1.amazonaws.com/neos-2-0-sit-abs-payment-processor-services:V1.00.00.12.10
+          image: 058264110280.dkr.ecr.ap-southeast-1.amazonaws.com/neos-2-0-sit-abs-payment-processor-services:V1.00.00.12.11
           imagePullPolicy: Always
           ports:
             - containerPort: 9399
