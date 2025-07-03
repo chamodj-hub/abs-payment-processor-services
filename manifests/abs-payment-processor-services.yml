@@ -48,6 +48,18 @@ spec:
           env:
             - name: TZ
               value: "Asia/Colombo"
+          livenessProbe:
+            httpGet:
+              path: /abs-payment-processor/actuator/health
+              port: 8081
+            initialDelaySeconds: 10
+            periodSeconds: 30
+          readinessProbe:
+            httpGet:
+              path: /abs-payment-processor/actuator/health/readiness
+              port: 8081
+            initialDelaySeconds: 5
+            periodSeconds: 15
       imagePullSecrets:
         - name: ndbabs
       dnsPolicy: ClusterFirstWithHostNet
